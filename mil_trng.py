@@ -217,7 +217,7 @@ bags_train = bags_train_resampled
 labels_train = labels_train_resampled
 
 # DataLoaders with multiple workers
-batch_size = 512
+batch_size = 32
 train_dataset = MILDataset(bags_train, labels_train)
 val_dataset = MILDataset(bags_val, labels_val)
 test_dataset = MILDataset(bags_test, labels_test)
@@ -290,10 +290,10 @@ class MILModel(nn.Module):
 
 # Initialize Model, Loss, Optimizer
 input_dim = 9
-hidden_dim = 16 #og was 64
+hidden_dim = 128 #og was 64
 learning_rate = 0.001
-num_epochs = 150
-threshold = 0.35
+num_epochs = 50
+threshold = 0.5
 
 # Compute class weights
 from sklearn.utils.class_weight import compute_class_weight
@@ -318,7 +318,12 @@ class FocalLoss(nn.Module):
 criterion = FocalLoss(alpha=0.25, gamma=2)
 # criterion = nn.BCEWithLogitsLoss(pos_weight=torch.tensor([pos_weight]).to(device))
 model = MILModel(input_dim, hidden_dim).to(device)
-optimizer = torch.optim.Adam(model.parameters(), lr=learning_rate)
+
+import torch.optim as optim
+
+# Define the SGD optimizer
+optimizer = torch.optim.Adam(model.parameters(), lr=learning_rate)  # Added momentum for better convergence
+
 
 # Training Loop
 for epoch in range(num_epochs):
