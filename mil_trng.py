@@ -183,8 +183,8 @@ num_neg = len(labels_train_neg)
 print(f"Number of positive samples in training data: {num_pos}")
 print(f"Number of negative samples in training data: {num_neg}")
 
-desired_num_pos = 15000 
-desired_num_neg = 40000
+desired_num_pos = 10000 
+desired_num_neg = 30000
 
 from sklearn.utils import resample
 
@@ -217,7 +217,7 @@ bags_train = bags_train_resampled
 labels_train = labels_train_resampled
 
 # DataLoaders with multiple workers
-batch_size = 32
+batch_size = 64
 train_dataset = MILDataset(bags_train, labels_train)
 val_dataset = MILDataset(bags_val, labels_val)
 test_dataset = MILDataset(bags_test, labels_test)
@@ -290,7 +290,7 @@ class MILModel(nn.Module):
 
 # Initialize Model, Loss, Optimizer
 input_dim = 9
-hidden_dim = 128 #og was 64
+hidden_dim = 512 #og was 64
 learning_rate = 0.001
 num_epochs = 50
 threshold = 0.5
