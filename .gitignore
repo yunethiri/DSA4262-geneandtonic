@@ -1,9 +1,12 @@
 data.info.txt
 data.info.labelled
 dataset0.json
+dataset1.json
+dataset2.json
 dataset0.json.gz
 clustered_dat_noscale.pkl
 model_weights_e150_bs512.pth
 output.csv
 dataset1.json
 clustered_dat_noscaled_by_msmt_elliptic.pkl
+__pycache__
