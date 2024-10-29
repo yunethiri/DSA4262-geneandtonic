@@ -10,7 +10,7 @@ from utils import (
 )
 
 
-def predict_m6a(data_json_path, model_path, output_path, output_filename):
+def predict_m6a(data_json_path, model_path, output_path):
     """
     Applies a pre-trained model to predict m6A modification sites on new RNA-Seq data and saves prediction results to specified path.
 
@@ -18,7 +18,6 @@ def predict_m6a(data_json_path, model_path, output_path, output_filename):
         data_json_path (str): Path to data json file.
         model_path (str): Path to the pre-trained model file.
         output_path (str): Path to save the prediction results.
-        output_filename (str): Filename to save the prediction results.
 
     Returns:
         output_df (pd.DataFrame): Dataframe contaning prediction results. 
@@ -58,7 +57,7 @@ def predict_m6a(data_json_path, model_path, output_path, output_filename):
     y_pred_proba = model.predict_proba(X_test_scaled)[:, 1]
     output_df["score"] = y_pred_proba
 
-    save_df_path = os.path.join(output_path, output_filename) + ".csv"
+    save_df_path = output_path
     output_df.to_csv(save_df_path, index=False)
 
     print(f"Prediction results saved to {save_df_path}")
@@ -71,9 +70,6 @@ if __name__ == "__main__":
     parser.add_argument("--data", required=True, help="Path to RNA-seq data JSON file")
     parser.add_argument("--model", required=True, help="Path to the trained model file")
     parser.add_argument("--output_path", required=True, help="Path to save predictions")
-    parser.add_argument(
-        "--output_file", required=True, help="Filename to save predictions"
-    )
     args = parser.parse_args()
 
-    predict_m6a(args.data, args.model, args.output_path, args.output_file)
+    predict_m6a(args.data, args.model, args.output_path)

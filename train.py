@@ -17,7 +17,7 @@ from utils import (
 )
 
 
-def train_model(data_json_path, labels_file_path, output_path, output_filename):
+def train_model(data_json_path, labels_file_path, output_path):
     """
     Trains XGBoost Model and saves trained model to specified path.
 
@@ -25,7 +25,6 @@ def train_model(data_json_path, labels_file_path, output_path, output_filename):
         data_json_path (str): Path to data json file.
         labels_file_path (str): Path to file containing labels.
         output_path (str): Path to save trained model.
-        output_filename (str): Filename to save trained model.
 
     Returns:
         model: Trained model.
@@ -87,7 +86,7 @@ def train_model(data_json_path, labels_file_path, output_path, output_filename):
     model.fit(X_train_scaled, y_train)
 
     print("Saving model...")
-    model_save_path = os.path.join(output_path, output_filename) + ".pkl"
+    model_save_path = output_path
     with open(model_save_path, "wb") as f:
         pickle.dump(model, f)
 
@@ -103,9 +102,7 @@ if __name__ == "__main__":
     parser.add_argument(
         "--output_path", required=True, help="Path to save the trained model"
     )
-    parser.add_argument(
-        "--output_file", required=True, help="Filename to save the trained model"
-    )
+
     args = parser.parse_args()
 
-    train_model(args.data, args.labels, args.output_path, args.output_file)
+    train_model(args.data, args.labels, args.output_path)
