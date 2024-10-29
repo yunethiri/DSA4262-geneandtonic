@@ -66,7 +66,7 @@ The trained model will be saved to the specified path in .pkl format for later u
 
 To run prediction on new data using the trained model:
 ```bash
-python predict.py --data path/to/new_rna_data.json --model path/to/save_model.pkl --output path/to/predictions.csv
+python predict.py --data path/to/new_rna_data.json --model path/to/save_model.pkl --output_path path/to/predictions.csv
 ```
 **Arguments:**
 * ``--data``: Path to RNA-seq data, processed by m6Anet, in JSON format.
@@ -80,6 +80,6 @@ A pre-trained model is also included in model.pkl.
 
 To run prediction on the sample json file:
 ```bash
-python predict.py --data data/sample_rna_data.json --model model.pkl --output outputs/model_predictions/sample_predictions.json
+python predict.py --data data/sample_rna_data.json --model model.pkl --output_path outputs/model_predictions/sample_predictions.json
 ```
 
