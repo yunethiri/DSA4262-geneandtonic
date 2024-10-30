@@ -44,8 +44,7 @@ python3 -V # Check if Python3 version is installed successfully
 
 1. **Clone the Repository:**
    ```bash
-   git clone https://github.com/yourusername/m6A-modification-prediction.git
-   cd m6A-modification-prediction
+   git clone https://github.com/yunethiri/DSA4262-geneandtonic.git
    ```
 
 2. **Create Virtual Environment:** (Optional but Recommended)
@@ -63,8 +62,7 @@ python3 -V # Check if Python3 version is installed successfully
 
 1. **Clone the Repository:**
    ```bash
-   git clone https://github.com/yourusername/m6A-modification-prediction.git
-   cd m6A-modification-prediction
+   git clone https://github.com/yunethiri/DSA4262-geneandtonic.git
    ```
    
 2. **Install pip:** (If Not Already Installed)
