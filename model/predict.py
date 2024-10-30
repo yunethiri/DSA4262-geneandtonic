@@ -10,7 +10,7 @@ from utils import (
 )
 
 
-def predict_m6a(data_json_path, model_path, output_path):
+def predict_m6a(data_json_path, model_path, output_path, save_info):
     """
     Applies a pre-trained model to predict m6A modification sites on new RNA-Seq data and saves prediction results to specified path.
 
@@ -46,7 +46,10 @@ def predict_m6a(data_json_path, model_path, output_path):
         sequence_proportions_3,
     )
 
-    output_df = X_test_df[["transcript_id", "transcript_position", "sequence"]]
+    if save_info:
+        output_df = X_test_df[["transcript_id", "transcript_position", "sequence"]]
+    else:
+        output_df = X_test_df[["transcript_id", "transcript_position"]]
 
     print("Scaling features...")
     X_test_df = X_test_df.drop(["transcript_id", "transcript_position", "sequence"], axis=1)
@@ -70,6 +73,10 @@ if __name__ == "__main__":
     parser.add_argument("--data", required=True, help="Path to RNA-seq data JSON file")
     parser.add_argument("--model", required=True, help="Path to the trained model file")
     parser.add_argument("--output_path", required=True, help="Path to save predictions")
+    parser.add_argument("--save_info", required=False, help="Save additional information such as sequence")
     args = parser.parse_args()
 
-    predict_m6a(args.data, args.model, args.output_path)
+    predict_m6a(args.data, args.model, args.output_path, args.save_info)
+
+# To run with save_info:
+# python model/predict.py --data path/to/data.json --model path/to/model.pkl --output_path path/to/output.csv --save_info True
