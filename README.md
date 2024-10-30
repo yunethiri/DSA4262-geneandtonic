@@ -7,19 +7,19 @@ The project structure is as follows.
 ```bash
 main/
 ├── clustering/                    # Pickle files for clustering
+├── model/
+│   ├── predict.py                     # Script for making predictions
+│   ├── train.py                       # Script for training the model
+│   ├── utils.py                       # Script containing functions used for training and prediction
 ├── notebooks/                     # Notebooks for testing
 ├── data/
 │   ├── sample_rna_data.json       # Sample data for testing the prediction script
 ├── outputs/
-│   ├── intermediate_leaderboard/  # Outputs for intermediate leaderboard
 │   ├── model_predictions/         # Csv files containing model prediction outputs
 ├── .gitignore
 ├── README.md                      # Project documentation
-├── model.pkl                      # Pickle file for pretrained model
-├── predict.py                     # Script for making predictions
-├── requirements.txt               # Project dependencies
-├── train.py                       # Script for training the model
-└── utils.py                       # Script containing functions used for training and prediction
+├── model.joblib                   # Joblib file for pretrained model
+└── requirements.txt               # Project dependencies
 ```
 
 
@@ -31,7 +31,14 @@ main/
 - **[Testing the Prediction Script](#testing-the-prediction-script)**<br>
 
 # Installation
-It is recommended to use [Python version 3.8](https://www.python.org). (Default Python Version on Ubuntu)
+It is recommended to use [Python version 3.8](https://www.python.org). (Python 3.8 is the Default Python Version on Ubuntu 20.04)
+
+To install default Python3 version in Ubuntu 20.04: (If Not Already Installed)
+```bash
+sudo apt update -y && sudo apt upgrade -y # Recommended to update the system packages to their latest versions available
+sudo apt install python3 -y # Install the default Python3 version
+python3 -V # Check if Python3 version is installed successfully
+```
 
 ## If Running on Local Machine:
 
@@ -60,7 +67,7 @@ It is recommended to use [Python version 3.8](https://www.python.org). (Default 
    cd m6A-modification-prediction
    ```
    
-2. **Install pip:** (If Not Already Done So)
+2. **Install pip:** (If Not Already Installed)
    ```bash
    sudo apt install python3-pip
    ```
