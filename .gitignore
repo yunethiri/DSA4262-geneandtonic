@@ -1,10 +1,6 @@
-data.info.txt
-data.info.labelled
-dataset0.json
-dataset1.json
-dataset2.json
-dataset0.json.gz
-output.csv
+data.info.*
+dataset*.json
+dataset*.json.*
 
 model_weights_e150_bs512.pth
 clustered_dat_noscaled_by_msmt_elliptic.pkl
