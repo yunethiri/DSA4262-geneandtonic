@@ -45,7 +45,7 @@ python3 -V # Check if Python3 version is installed successfully
 1. **Clone the Repository:**
    ```bash
    git clone https://github.com/yunethiri/DSA4262-geneandtonic.git
-   cd DSA4262-geneandtonic
+   cd DSA4262-geneandtonic/
    ```
 
 2. **Create Virtual Environment:** (Optional but Recommended)
@@ -66,7 +66,7 @@ Use at least `m5a.2xlarge` instance
 1. **Clone the Repository:**
    ```bash
    git clone https://github.com/yunethiri/DSA4262-geneandtonic.git
-   cd DSA4262-geneandtonic.git
+   cd DSA4262-geneandtonic/
    ```
    
 2. **Install pip:** (If Not Already Installed)
@@ -106,7 +106,7 @@ The trained model will be saved to the specified path in .joblib format for late
 To run prediction on new data using the trained model:
 ```bash
 # On Local Machine
-python3 model/predict.py --data path/to/new_rna_data.json --model path/to/save_model.joblib --output_path path/to/predictions.csv
+python model/predict.py --data path/to/new_rna_data.json --model path/to/save_model.joblib --output_path path/to/predictions.csv
 
 # On Ubuntu
 python3 model/predict.py --data path/to/new_rna_data.json --model path/to/save_model.joblib --output_path path/to/predictions.csv
