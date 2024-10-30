@@ -76,6 +76,10 @@ It is recommended to use [Python version 3.8](https://www.python.org).
 
 To train the model on RNA-Seq data:
 ```bash
+# On Local Machine
+python model/train.py --data path/to/rna_data.json --labels path/to/labels_data.info --output_path path/to/save_model.joblib
+
+# On Ubuntu
 python3 model/train.py --data path/to/rna_data.json --labels path/to/labels_data.info --output_path path/to/save_model.joblib
 ```
 **Arguments:**
@@ -89,6 +93,10 @@ The trained model will be saved to the specified path in .joblib format for late
 
 To run prediction on new data using the trained model:
 ```bash
+# On Local Machine
+python3 model/predict.py --data path/to/new_rna_data.json --model path/to/save_model.joblib --output_path path/to/predictions.csv
+
+# On Ubuntu
 python3 model/predict.py --data path/to/new_rna_data.json --model path/to/save_model.joblib --output_path path/to/predictions.csv
 ```
 **Arguments:**
@@ -103,6 +111,10 @@ A pre-trained model is also included in model.pkl.
 
 To run prediction on the sample json file:
 ```bash
+# On Local Machine
+python model/predict.py --data data/sample_rna_data.json --model model.joblib --output_path outputs/model_predictions/sample_predictions.json
+
+# On Ubuntu
 python3 model/predict.py --data data/sample_rna_data.json --model model.joblib --output_path outputs/model_predictions/sample_predictions.json
 ```
 
