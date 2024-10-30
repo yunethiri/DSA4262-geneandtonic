@@ -44,8 +44,8 @@ python3 -V # Check if Python3 version is installed successfully
 
 1. **Clone the Repository:**
    ```bash
-   git clone https://github.com/yourusername/m6A-modification-prediction.git
-   cd m6A-modification-prediction
+   git clone https://github.com/yunethiri/DSA4262-geneandtonic.git
+   cd DSA4262-geneandtonic.git
    ```
 
 2. **Create Virtual Environment:** (Optional but Recommended)
@@ -61,10 +61,12 @@ python3 -V # Check if Python3 version is installed successfully
 
 ## If Running on Ubuntu:
 
+Use at least `m5a.2xlarge` instance
+
 1. **Clone the Repository:**
    ```bash
-   git clone https://github.com/yourusername/m6A-modification-prediction.git
-   cd m6A-modification-prediction
+   git clone https://github.com/yunethiri/DSA4262-geneandtonic.git
+   cd DSA4262-geneandtonic.git
    ```
    
 2. **Install pip:** (If Not Already Installed)
@@ -88,6 +90,9 @@ python model/train.py --data path/to/rna_data.json --labels path/to/labels_data.
 
 # On Ubuntu
 python3 model/train.py --data path/to/rna_data.json --labels path/to/labels_data.info --output_path path/to/save_model.joblib
+
+# Default Project Storage routes
+python3 model/train.py --data ../studies/ProjectStorage/rna_data.json --labels ../studies/ProjectStorage/labels_data.info.txt --output_path model.joblib
 ```
 **Arguments:**
 * ``--data``: Path to RNA-seq data, processed by m6Anet, in JSON format.
@@ -105,6 +110,9 @@ python3 model/predict.py --data path/to/new_rna_data.json --model path/to/save_m
 
 # On Ubuntu
 python3 model/predict.py --data path/to/new_rna_data.json --model path/to/save_model.joblib --output_path path/to/predictions.csv
+
+# Default Project Storage routes
+python3 model/predict.py --data ../studies/ProjectStorage/dataset0.json --model model.joblib --output_path outputs/predictions.csv
 ```
 **Arguments:**
 * ``--data``: Path to RNA-seq data, processed by m6Anet, in JSON format.
