@@ -1,4 +1,4 @@
-import pickle
+import joblib
 import argparse
 import os
 
@@ -24,7 +24,7 @@ def predict_m6a(data_json_path, model_path, output_path, save_info):
     """
 
     with open(model_path, "rb") as f:
-        model = pickle.load(f)
+        model = joblib.load(f)
 
     print("Reading data json...")
     data_list = read_data_json(data_json_path)

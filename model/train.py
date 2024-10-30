@@ -1,4 +1,4 @@
-import pickle
+import joblib
 import os
 import argparse
 
@@ -88,7 +88,7 @@ def train_model(data_json_path, labels_file_path, output_path):
     print("Saving model...")
     model_save_path = output_path
     with open(model_save_path, "wb") as f:
-        pickle.dump(model, f)
+        joblib.dump(model, f)
 
     print(f"Model saved to {model_save_path}")
 
