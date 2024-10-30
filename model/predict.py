@@ -47,7 +47,7 @@ def predict_m6a(data_json_path, model_path, output_path, save_info):
     )
 
     if save_info:
-        output_df = X_test_df[["transcript_id", "transcript_position", "sequence"]]
+        output_df = X_test_df.copy()
     else:
         output_df = X_test_df[["transcript_id", "transcript_position"]]
 
@@ -73,10 +73,10 @@ if __name__ == "__main__":
     parser.add_argument("--data", required=True, help="Path to RNA-seq data JSON file")
     parser.add_argument("--model", required=True, help="Path to the trained model file")
     parser.add_argument("--output_path", required=True, help="Path to save predictions")
-    parser.add_argument("--save_info", required=False, help="Save additional information such as sequence")
+    parser.add_argument("--save_info", required=False, help="Save additional information such as sequence and features")
     args = parser.parse_args()
 
     predict_m6a(args.data, args.model, args.output_path, args.save_info)
 
-# To run with save_info:
+# To run with save_info: (for Task 2, data analysis)
 # python model/predict.py --data path/to/data.json --model path/to/model.pkl --output_path path/to/output.csv --save_info True
