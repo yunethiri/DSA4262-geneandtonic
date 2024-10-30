@@ -1,0 +1,12 @@
+aws s3 cp --no-sign-request s3://sg-nex-data/data/processed_data/m6Anet/SGNex_A549_directRNA_replicate5_run1/data.json dataRaw/data.json
+aws s3 cp --no-sign-request s3://sg-nex-data/data/processed_data/m6Anet/SGNex_A549_directRNA_replicate6_run1/data.json dataRaw/data.json
+aws s3 cp --no-sign-request s3://sg-nex-data/data/processed_data/m6Anet/SGNex_Hct116_directRNA_replicate3_run1/data.json dataRaw/data.json
+aws s3 cp --no-sign-request s3://sg-nex-data/data/processed_data/m6Anet/SGNex_Hct116_directRNA_replicate3_run4/data.json dataRaw/data.json
+aws s3 cp --no-sign-request s3://sg-nex-data/data/processed_data/m6Anet/SGNex_Hct116_directRNA_replicate4_run3/data.json dataRaw/data.json
+aws s3 cp --no-sign-request s3://sg-nex-data/data/processed_data/m6Anet/SGNex_HepG2_directRNA_replicate5_run2/data.json dataRaw/data.json
+aws s3 cp --no-sign-request s3://sg-nex-data/data/processed_data/m6Anet/SGNex_HepG2_directRNA_replicate6_run1/data.json dataRaw/data.json
+aws s3 cp --no-sign-request s3://sg-nex-data/data/processed_data/m6Anet/SGNex_K562_directRNA_replicate4_run1/data.json dataRaw/data.json
+aws s3 cp --no-sign-request s3://sg-nex-data/data/processed_data/m6Anet/SGNex_K562_directRNA_replicate5_run1/data.json dataRaw/data.json
+aws s3 cp --no-sign-request s3://sg-nex-data/data/processed_data/m6Anet/SGNex_K562_directRNA_replicate6_run1/data.json dataRaw/data.json
+aws s3 cp --no-sign-request s3://sg-nex-data/data/processed_data/m6Anet/SGNex_MCF7_directRNA_replicate3_run1/data.json dataRaw/data.json
+aws s3 cp --no-sign-request s3://sg-nex-data/data/processed_data/m6Anet/SGNex_MCF7_directRNA_replicate4_run1/data.json dataRaw/data.json
