@@ -117,9 +117,9 @@ python3 model/predict.py --data path/to/new_rna_data.json --model path/to/save_m
 To run prediction on the sample json file:
 ```bash
 # On Local Machine
-python model/predict.py --data data/sample_rna_data.json --model model.joblib --output_path outputs/model_predictions/sample_predictions.json
+python model/predict.py --data data/sample_rna_data.json --model model.joblib --output_path outputs/model_predictions/sample_predictions.csv
 
 # On Ubuntu
-python3 model/predict.py --data data/sample_rna_data.json --model model.joblib --output_path outputs/model_predictions/sample_predictions.json
+python3 model/predict.py --data data/sample_rna_data.json --model model.joblib --output_path outputs/model_predictions/sample_predictions.csv
 ```
 
