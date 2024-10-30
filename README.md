@@ -31,7 +31,7 @@ main/
 - **[Testing the Prediction Script](#testing-the-prediction-script)**<br>
 
 # Installation
-It is recommended to use [Python version 3.8](https://www.python.org). 
+It is recommended to use [Python version 3.8](https://www.python.org). (Default Python Version on Ubuntu)
 
 ## If Running on Local Machine:
 
@@ -106,8 +106,8 @@ python3 model/predict.py --data path/to/new_rna_data.json --model path/to/save_m
 
 # Testing the Prediction Script
 
-A sample dataset is included in data/sample_rna_data.json for testing the prediction script.
-A pre-trained model is also included in model.pkl.
+- A sample dataset is included in data/sample_rna_data.json for testing the prediction script.
+- A pre-trained model is also included in model.joblib.
 
 To run prediction on the sample json file:
 ```bash
