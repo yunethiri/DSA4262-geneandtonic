@@ -31,21 +31,44 @@ main/
 - **[Testing the Prediction Script](#testing-the-prediction-script)**<br>
 
 # Installation
-It is recommended to use [Python version 3.10 or higher](https://www.python.org). 
+It is recommended to use [Python version 3.8](https://www.python.org). 
+
+## If Running on Local Machine:
 
 1. **Clone the Repository:**
    ```bash
    git clone https://github.com/yourusername/m6A-modification-prediction.git
    cd m6A-modification-prediction
+   ```
 
 2. **Create Virtual Environment:** (Optional but Recommended)
    ```bash
    python -m venv env
    source env/bin/activate
+   ```
    
-3. **Install Required Packages**
+3. **Install Required Packages:**
    ```bash
    pip install -r requirements.txt
+   ```
+
+## If Running on Ubuntu:
+
+1. **Clone the Repository:**
+   ```bash
+   git clone https://github.com/yourusername/m6A-modification-prediction.git
+   cd m6A-modification-prediction
+   ```
+   
+2. **Install pip:** (If Not Already Done So)
+   ```bash
+   sudo apt install python3-pip
+   ```
+
+3. **Install Required Packages:**
+   ```bash
+   pip install -r requirements.txt
+   ```
 
 # Running the Model
 
@@ -53,20 +76,20 @@ It is recommended to use [Python version 3.10 or higher](https://www.python.org)
 
 To train the model on RNA-Seq data:
 ```bash
-python model/train.py --data path/to/rna_data.json --labels path/to/labels_data.info --output_path path/to/save_model.pkl
+python3 model/train.py --data path/to/rna_data.json --labels path/to/labels_data.info --output_path path/to/save_model.joblib
 ```
 **Arguments:**
 * ``--data``: Path to RNA-seq data, processed by m6Anet, in JSON format.
 * ``--labels``: Path to the m6A labels file.
 * ``--output_path``: Path to save the trained model file.
 
-The trained model will be saved to the specified path in .pkl format for later use in predictions.
+The trained model will be saved to the specified path in .joblib format for later use in predictions.
 
 ## Model Prediction
 
 To run prediction on new data using the trained model:
 ```bash
-python model/predict.py --data path/to/new_rna_data.json --model path/to/save_model.pkl --output_path path/to/predictions.csv
+python3 model/predict.py --data path/to/new_rna_data.json --model path/to/save_model.joblib --output_path path/to/predictions.csv
 ```
 **Arguments:**
 * ``--data``: Path to RNA-seq data, processed by m6Anet, in JSON format.
@@ -80,6 +103,6 @@ A pre-trained model is also included in model.pkl.
 
 To run prediction on the sample json file:
 ```bash
-python model/predict.py --data data/sample_rna_data.json --model model.pkl --output_path outputs/model_predictions/sample_predictions.json
+python3 model/predict.py --data data/sample_rna_data.json --model model.joblib --output_path outputs/model_predictions/sample_predictions.json
 ```
 
