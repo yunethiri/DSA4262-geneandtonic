@@ -47,7 +47,20 @@ def predict_m6a(data_json_path, model_path, output_path, save_info):
     )
 
     if save_info:
-        output_df = X_test_df.copy()
+        output_df = X_test_df[['transcript_id', 'transcript_position', 'sequence', 
+                                'proportion_1','proportion_2', 'proportion_3', 
+                            'diff_1_1', 'diff_1_2', 'diff_1_3', 
+                            'diff_2_1', 'diff_2_2', 'diff_2_3', 
+                            'length', 
+                            'mean_0','var_0', 'max_0', 'min_0', 
+                            'mean_1', 'var_1', 'max_1', 'min_1', 
+                            'mean_2', 'var_2', 'max_2', 'min_2', 
+                            'mean_3', 'var_3', 'max_3', 'min_3', 
+                            'mean_4', 'var_4', 'max_4', 'min_4', 
+                            'mean_5', 'var_5', 'max_5', 'min_5', 
+                            'mean_6', 'var_6', 'max_6', 'min_6', 
+                            'mean_7', 'var_7', 'max_7', 'min_7', 
+                            'mean_8', 'var_8', 'max_8', 'min_8', ]]
     else:
         output_df = X_test_df[["transcript_id", "transcript_position"]]
 
