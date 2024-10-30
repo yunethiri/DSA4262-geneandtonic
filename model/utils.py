@@ -7,6 +7,7 @@ from collections import Counter
 from scipy.stats import skew, kurtosis
 from xgboost import XGBClassifier
 from tqdm import tqdm 
+import joblib
 
 from sklearn.preprocessing import StandardScaler
 from sklearn.model_selection import (
@@ -14,6 +15,8 @@ from sklearn.model_selection import (
     RandomizedSearchCV,
     StratifiedKFold,
 )
+
+from concurrent.futures import ProcessPoolExecutor, as_completed
 
 
 def read_labels(labels_file):
@@ -112,9 +115,8 @@ def get_5_mer_sequence_proportions(data_list):
 
     return sequence_proportions_1, sequence_proportions_2, sequence_proportions_3
 
-
-def create_aggregated_dataframe(
-    data_list,
+def process_transcript_data(
+    data,
     start_idx,
     end_idx,
     sequence_proportions_1,
@@ -122,7 +124,7 @@ def create_aggregated_dataframe(
     sequence_proportions_3,
 ):
     """
-    Perform feature engineering on data_list and collate features to create aggregated dataframe.
+    Perform feature engineering on data_list and collate features to create rows, returning to parallel processor to combine to df.
 
     Args:
         data_list (list): List containing data info.
@@ -133,100 +135,117 @@ def create_aggregated_dataframe(
         sequence_proportions_3 (dict): Dict containing sequence proportion for third 5-mer.
 
     Returns:
-        df (pd.DataFrame): Dataframe containing 85 features for each transcript id and transcript position.
+        rows (List): List containing 85 features for each transcript id and transcript position.
 
     """
     rows = []
-    for data in tqdm(data_list, total = len(data_list)):
-        for transcript_id, positions in data.items():
-            for position, sequence_data in positions.items():
-                for sequence, measurements in sequence_data.items():
-                    # Convert to numpy array for easier aggregation
-                    scores_array = np.array(measurements)
+    for transcript_id, positions in data.items():
+        for position, sequence_data in positions.items():
+            for sequence, measurements in sequence_data.items():
+                # Convert to numpy array for easier aggregation
+                scores_array = np.array(measurements)
 
-                    # Calculate the mean, variance, max, and min along the rows
-                    mean_scores = np.mean(scores_array, axis=0)
-                    var_scores = np.var(scores_array, axis=0)
-                    max_scores = np.max(scores_array, axis=0)
-                    min_scores = np.min(scores_array, axis=0)
-                    skew_scores = skew(scores_array, axis=0)
-                    kurtosis_scores = kurtosis(scores_array, axis=0)
-                    sequence_1 = sequence[start_idx:end_idx]
-                    sequence_2 = sequence[start_idx + 1 : end_idx + 1]
-                    sequence_3 = sequence[start_idx + 2 : end_idx + 2]
+                # Calculate the mean, variance, max, and min along the rows
+                mean_scores = np.mean(scores_array, axis=0)
+                var_scores = np.var(scores_array, axis=0)
+                max_scores = np.max(scores_array, axis=0)
+                min_scores = np.min(scores_array, axis=0)
+                skew_scores = skew(scores_array, axis=0)
+                kurtosis_scores = kurtosis(scores_array, axis=0)
+                sequence_1 = sequence[start_idx:end_idx]
+                sequence_2 = sequence[start_idx + 1 : end_idx + 1]
+                sequence_3 = sequence[start_idx + 2 : end_idx + 2]
 
-                    measurement_diff_mean_dwell_one = np.mean(
-                        scores_array[:, 3] - scores_array[:, 0]
+                measurement_diff_mean_dwell_one = np.mean(
+                    scores_array[:, 3] - scores_array[:, 0]
+                )
+                measurement_diff_mean_sd_one = np.mean(
+                    scores_array[:, 4] - scores_array[:, 1]
+                )
+                measurement_diff_mean_mean_one = np.mean(
+                    scores_array[:, 5] - scores_array[:, 2]
+                )
+
+                measurement_diff_mean_dwell_two = np.mean(
+                    scores_array[:, 6] - scores_array[:, 3]
+                )
+                measurement_diff_mean_sd_two = np.mean(
+                    scores_array[:, 7] - scores_array[:, 4]
+                )
+                measurement_diff_mean_mean_two = np.mean(
+                    scores_array[:, 8] - scores_array[:, 5]
+                )
+                transcript_position = {
+                    "transcript_id": transcript_id,
+                    "transcript_position": position,
+                    "sequence": sequence, 
+                    "proportion_1": sequence_proportions_1[sequence_1],
+                    "proportion_2": sequence_proportions_2[sequence_2],
+                    "proportion_3": sequence_proportions_3[sequence_3],
+                    "pos": int(position),
+                    "diff_1_1": measurement_diff_mean_dwell_one,
+                    "diff_1_2": measurement_diff_mean_sd_one,
+                    "diff_1_3": measurement_diff_mean_mean_one,
+                    "diff_2_1": measurement_diff_mean_dwell_two,
+                    "diff_2_2": measurement_diff_mean_sd_two,
+                    "diff_2_3": measurement_diff_mean_mean_two,
+                    "length": len(measurements),
+                }
+
+                for idx in range(scores_array.shape[1]):
+                    transcript_position.update(
+                        {
+                            f"mean_{idx}": mean_scores[idx],
+                            f"var_{idx}": var_scores[idx],
+                            f"max_{idx}": max_scores[idx],
+                            f"min_{idx}": min_scores[idx],
+                            f"skewness_{idx}": skew_scores[idx],
+                            f"kurtosis_{idx}": kurtosis_scores[idx],
+                        }
                     )
-                    measurement_diff_mean_sd_one = np.mean(
-                        scores_array[:, 4] - scores_array[:, 1]
-                    )
-                    measurement_diff_mean_mean_one = np.mean(
-                        scores_array[:, 5] - scores_array[:, 2]
+                for i in range(3):
+                    transcript_position.update(
+                        {
+                            f"mean_{i}c": mean_scores[i]
+                            + mean_scores[i + 3]
+                            + mean_scores[i + 6],
+                            f"var_{i}c": var_scores[i]
+                            + var_scores[i + 3]
+                            + var_scores[i + 6],
+                            f"max_{i}c": max_scores[i]
+                            + max_scores[i + 3]
+                            + max_scores[i + 6],
+                            f"min_{i}c": min_scores[i]
+                            + min_scores[i + 3]
+                            + min_scores[i + 6],
+                            f"skewness_{i}c": skew_scores[i]
+                            + skew_scores[i + 3]
+                            + skew_scores[i + 6],
+                            f"kurtosis_{i}c": kurtosis_scores[i]
+                            + kurtosis_scores[i + 3]
+                            + skew_scores[i + 6],
+                        }
                     )
 
-                    measurement_diff_mean_dwell_two = np.mean(
-                        scores_array[:, 6] - scores_array[:, 3]
-                    )
-                    measurement_diff_mean_sd_two = np.mean(
-                        scores_array[:, 7] - scores_array[:, 4]
-                    )
-                    measurement_diff_mean_mean_two = np.mean(
-                        scores_array[:, 8] - scores_array[:, 5]
-                    )
-                    transcript_position = {
-                        "transcript_id": transcript_id,
-                        "transcript_position": position,
-                        "sequence": sequence, 
-                        "proportion_1": sequence_proportions_1[sequence_1],
-                        "proportion_2": sequence_proportions_2[sequence_2],
-                        "proportion_3": sequence_proportions_3[sequence_3],
-                        "pos": int(position),
-                        "diff_1_1": measurement_diff_mean_dwell_one,
-                        "diff_1_2": measurement_diff_mean_sd_one,
-                        "diff_1_3": measurement_diff_mean_mean_one,
-                        "diff_2_1": measurement_diff_mean_dwell_two,
-                        "diff_2_2": measurement_diff_mean_sd_two,
-                        "diff_2_3": measurement_diff_mean_mean_two,
-                        "length": len(measurements),
-                    }
+                rows.append(transcript_position)
 
-                    for idx in range(scores_array.shape[1]):
-                        transcript_position.update(
-                            {
-                                f"mean_{idx}": mean_scores[idx],
-                                f"var_{idx}": var_scores[idx],
-                                f"max_{idx}": max_scores[idx],
-                                f"min_{idx}": min_scores[idx],
-                                f"skewness_{idx}": skew_scores[idx],
-                                f"kurtosis_{idx}": kurtosis_scores[idx],
-                            }
-                        )
-                    for i in range(3):
-                        transcript_position.update(
-                            {
-                                f"mean_{i}c": mean_scores[i]
-                                + mean_scores[i + 3]
-                                + mean_scores[i + 6],
-                                f"var_{i}c": var_scores[i]
-                                + var_scores[i + 3]
-                                + var_scores[i + 6],
-                                f"max_{i}c": max_scores[i]
-                                + max_scores[i + 3]
-                                + max_scores[i + 6],
-                                f"min_{i}c": min_scores[i]
-                                + min_scores[i + 3]
-                                + min_scores[i + 6],
-                                f"skewness_{i}c": skew_scores[i]
-                                + skew_scores[i + 3]
-                                + skew_scores[i + 6],
-                                f"kurtosis_{i}c": kurtosis_scores[i]
-                                + kurtosis_scores[i + 3]
-                                + skew_scores[i + 6],
-                            }
-                        )
+    return rows
 
-                    rows.append(transcript_position)
+def create_aggregated_dataframe(data_list, start_idx, end_idx, sequence_proportions_1, sequence_proportions_2, sequence_proportions_3):
+    """
+    Handles creation of feature engineered df with paralell processing
+    """
+    rows = []
+    with ProcessPoolExecutor() as executor:
+        futures = [
+            executor.submit(
+                process_transcript_data, data, start_idx, end_idx, sequence_proportions_1, sequence_proportions_2, sequence_proportions_3
+            )
+            for data in data_list
+        ]
+
+        for future in tqdm(as_completed(futures), total=len(data_list)):
+            rows.extend(future.result())
 
     # Create DataFrame
     df = pd.DataFrame(rows)
