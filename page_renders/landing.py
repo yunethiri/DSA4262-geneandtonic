@@ -8,15 +8,15 @@ def get_unique_cell_lines(df):
 
 def get_run_counts(df):
     """Count 1s and 0s for each run and calculate the proportion of 1s."""
-    run_counts = df.group_by(['run', 'prediction']).agg(pl.count().alias("count"))
+    run_counts = df.group_by(['cell_line', 'run', 'prediction']).agg(pl.count().alias("count"))
     
     run_counts = run_counts.pivot(
         values="count",
-        index="run",
+        index=["cell_line", "run"],
         columns="prediction"
     ).fill_null(0)
     
-    run_counts = run_counts.rename({"run": "Cell Line Run", "0": "0 (No Mutation)", "1": "1 (Mutation)"})
+    run_counts = run_counts.rename({"cell_line": "Cell Line", "run": "Cell Line Run", "0": "0 (No Mutation)", "1": "1 (Mutation)"})
     
     run_counts = run_counts.with_columns(
         ((run_counts['1 (Mutation)'] / (run_counts['0 (No Mutation)'] + run_counts['1 (Mutation)'])) * 100)
@@ -42,4 +42,4 @@ def render_main_page():
     run_counts = get_run_counts(df)
     
     c2.subheader("Number of Mutations for Each Unique Run")
-    c2.write(run_counts)
+    c2.dataframe(data=run_counts, height=450)
