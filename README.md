@@ -123,6 +123,8 @@ python3 model/predict.py --data ../studies/ProjectStorage/dataset0.json --model 
 * ``--model``: Path to the trained model file.
 * ``--output_path``: Path to save the prediction results to csv.
 
+Easter Egg: To include additional information and features in the output prediction csv, include ```--save_info True``` in the command.
+
 # Testing the Prediction Script
 
 - A sample dataset is included in data/sample_rna_data.json for testing the prediction script.
