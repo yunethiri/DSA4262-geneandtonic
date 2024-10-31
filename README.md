@@ -18,6 +18,7 @@ main/
 ├── outputs/
 │   ├── model_predictions/         # Csv files containing model prediction outputs
 ├── page_renders/                  # Page renderer scripts for streamlit      
+│   ├── requirementx.txt           # Streamlit dependencies 
 ├── .gitignore
 ├── app.py                         # Streamlit interface for visualisation of predictions   
 ├── README.md                      # Project documentation
@@ -142,6 +143,10 @@ Streamlit visualisation can be done after converting the outputted csv to parque
 
 - conversion can be done through convert_to_parquet.ipynb
 
+Install packages:
+``` Bash
+pip install -r page_renders/requirements.txt
+```
 
 To run the streamlit interface:
 ```Bash
