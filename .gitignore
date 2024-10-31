@@ -11,3 +11,6 @@ testing.ipynb
 dataRaw/data.json
 
 check*.csv
+
+data/parquet_files/*
+!data/parquet_files/.gitkeep
