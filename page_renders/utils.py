@@ -16,6 +16,15 @@ def analyze_numerical_mutations(df):
     numerical_columns = [col for col in df.columns if df.schema[col] in [pl.Float64, pl.Int64]]
     x_axis_column = c1.selectbox("Select numerical feature to compare by", numerical_columns)
     group_by_column = c2.selectbox("Group by: (Run/ Cell Line)", ["run", "cell_line"])
+
+    df = df.with_columns((pl.col("cell_line") + "_" + pl.col("run")).alias("combined_run"))
+    if group_by_column == "run":
+        group_by_column = "combined_run"  # Update group_by_column to the new combined column
+
+    # Filter by which cell lines/ runs to include
+    unique_runs = df.select("combined_run").unique().to_series().to_list() if group_by_column == "combined_run" else df.select("cell_line").unique().to_series().to_list()
+    selected_runs = st.multiselect("Select Runs or Cell Lines to Include", unique_runs, default=unique_runs)
+    df = df.filter(pl.col(group_by_column).is_in(selected_runs))
     
     # Purely for handling latency on graph generation, no binning displays counts for all value-types
     # Check the number of unique values in x-axis column
@@ -31,10 +40,10 @@ def analyze_numerical_mutations(df):
         # Dynamic binning based on x-values
         max_bin = max(1.0, (column_max - column_min) / 10)  # Set max_bin based on data range
         step_bin = max(0.01, max_bin / 100)  # Dynamic step size based on max_bin
-        default_bin = min(1.0, max_bin / 5)
+        default_bin = max(1.0, max_bin / 5)
 
         # Slider for adjusting
-        bin_size = st.slider(
+        bin_size = c4.slider(
             f"Select bin size for {group_by_column}",
             min_value=0.001,
             max_value=max_bin,

@@ -6,7 +6,7 @@ The project structure is as follows.
 
 ```bash
 main/
-├── clustering/                    # Pickle files for clustering
+├── clustering/                    # Pickle files for clustering           
 ├── model/
 │   ├── predict.py                     # Script for making predictions
 │   ├── train.py                       # Script for training the model
@@ -14,9 +14,12 @@ main/
 ├── notebooks/                     # Notebooks for testing
 ├── data/
 │   ├── sample_rna_data.json       # Sample data for testing the prediction script
+│   ├── parquet_files/   
 ├── outputs/
 │   ├── model_predictions/         # Csv files containing model prediction outputs
+├── page_renders/                  # Page renderer scripts for streamlit      
 ├── .gitignore
+├── app.py                         # Streamlit interface for visualisation of predictions   
 ├── README.md                      # Project documentation
 ├── model.joblib                   # Joblib file for pretrained model
 └── requirements.txt               # Project dependencies
@@ -133,3 +136,14 @@ python model/predict.py --data data/sample_rna_data.json --model model/model.job
 python3 model/predict.py --data data/sample_rna_data.json --model model/model.joblib --output_path outputs/model_predictions/sample_predictions.csv
 ```
 
+# Visualising results 
+
+Streamlit visualisation can be done after converting the outputted csv to parquet files and putting them into the folder: `data/parquet_files`.
+
+- conversion can be done through convert_to_parquet.ipynb
+
+
+To run the streamlit interface:
+```Bash
+streamlit run app.py
+```
