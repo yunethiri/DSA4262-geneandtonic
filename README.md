@@ -106,13 +106,13 @@ The trained model will be saved to the specified path in .joblib format for late
 To run prediction on new data using the trained model:
 ```bash
 # On Local Machine
-python model/predict.py --data path/to/new_rna_data.json --model path/to/save_model.joblib --output_path path/to/predictions.csv
+python model/predict.py --data path/to/new_rna_data.json --model model.joblib --output_path path/to/predictions.csv
 
 # On Ubuntu
-python3 model/predict.py --data path/to/new_rna_data.json --model path/to/save_model.joblib --output_path path/to/predictions.csv
+python3 model/predict.py --data path/to/new_rna_data.json --model model.joblib --output_path path/to/predictions.csv
 
 # Default Project Storage routes
-python3 model/predict.py --data ../studies/ProjectStorage/dataset0.json --model model.joblib --output_path outputs/predictions.csv
+python3 model/predict.py --data ../studies/ProjectStorage/dataset0.json --model model.joblib --output_path path/to/predictions.csv
 ```
 **Arguments:**
 * ``--data``: Path to RNA-seq data, processed by m6Anet, in JSON format.
