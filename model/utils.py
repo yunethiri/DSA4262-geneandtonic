@@ -1,4 +1,5 @@
 import json
+import warnings
 
 import pandas as pd
 import numpy as np
@@ -18,6 +19,7 @@ from sklearn.model_selection import (
 
 from concurrent.futures import ProcessPoolExecutor, as_completed
 
+warnings.filterwarnings("ignore", category=RuntimeWarning, message="Precision loss occurred in moment calculation due to catastrophic cancellation. This occurs when the data are nearly identical. Results may be unreliable.")
 
 def read_labels(labels_file):
     """
