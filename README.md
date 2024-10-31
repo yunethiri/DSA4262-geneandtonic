@@ -137,7 +137,7 @@ python model/predict.py --data data/sample_rna_data.json --model model/model.job
 python3 model/predict.py --data data/sample_rna_data.json --model model/model.joblib --output_path outputs/model_predictions/sample_predictions.csv
 ```
 
-# Visualising results 
+# Visualising Results 
 
 Streamlit visualisation can be done after converting the output prediction csv files to parquet files and putting them into the folder: `data/parquet_files/`.
 
