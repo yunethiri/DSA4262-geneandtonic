@@ -6,23 +6,24 @@ The project structure is as follows.
 
 ```bash
 main/
-├── clustering/                    # Pickle files for clustering           
+├── clustering/                    # Pickle files for clustering
+├── data/
+│   ├── parquet_files/            
+│   ├── aws_cmd.txt                
+│   ├── sample_rna_data.json       # Sample data for testing the prediction script           
 ├── model/
+│   ├── model.joblib                   # Joblib file for pretrained model
 │   ├── predict.py                     # Script for making predictions
 │   ├── train.py                       # Script for training the model
 │   ├── utils.py                       # Script containing functions used for training and prediction
-├── notebooks/                     # Notebooks for testing
-├── data/
-│   ├── sample_rna_data.json       # Sample data for testing the prediction script
-│   ├── parquet_files/   
+├── notebooks/                     # Notebooks for testing 
 ├── outputs/
 │   ├── model_predictions/         # Csv files containing model prediction outputs
 ├── page_renders/                  # Page renderer scripts for streamlit      
-│   ├── requirementx.txt           # Streamlit dependencies 
-├── .gitignore
-├── app.py                         # Streamlit interface for visualisation of predictions   
+│   ├── requirements.txt           # Streamlit dependencies 
+├── .gitignore 
 ├── README.md                      # Project documentation
-├── model.joblib                   # Joblib file for pretrained model
+├── app.py                         # Streamlit interface for visualisation of predictions  
 └── requirements.txt               # Project dependencies
 ```
 
@@ -96,7 +97,7 @@ python model/train.py --data path/to/rna_data.json --labels path/to/labels_data.
 python3 model/train.py --data path/to/rna_data.json --labels path/to/labels_data.info --output_path path/to/save_model.joblib
 
 # Default Project Storage routes
-python3 model/train.py --data ../studies/ProjectStorage/rna_data.json --labels ../studies/ProjectStorage/labels_data.info.txt --output_path model.joblib
+python3 model/train.py --data ../studies/ProjectStorage/rna_data.json --labels ../studies/ProjectStorage/labels_data.info.txt --output_path path/to/save_model.joblib
 ```
 **Arguments:**
 * ``--data``: Path to RNA-seq data, processed by m6Anet, in JSON format.
@@ -110,13 +111,13 @@ The trained model will be saved to the specified path in .joblib format for late
 To run prediction on new data using the trained model:
 ```bash
 # On Local Machine
-python model/predict.py --data path/to/new_rna_data.json --model model.joblib --output_path path/to/predictions.csv
+python model/predict.py --data path/to/new_rna_data.json --model model/model.joblib --output_path path/to/predictions.csv
 
 # On Ubuntu
-python3 model/predict.py --data path/to/new_rna_data.json --model model.joblib --output_path path/to/predictions.csv
+python3 model/predict.py --data path/to/new_rna_data.json --model model/model.joblib --output_path path/to/predictions.csv
 
 # Default Project Storage routes
-python3 model/predict.py --data ../studies/ProjectStorage/dataset0.json --model model.joblib --output_path path/to/predictions.csv
+python3 model/predict.py --data ../studies/ProjectStorage/dataset0.json --model model/model.joblib --output_path path/to/predictions.csv
 ```
 **Arguments:**
 * ``--data``: Path to RNA-seq data, processed by m6Anet, in JSON format.
@@ -126,22 +127,22 @@ python3 model/predict.py --data ../studies/ProjectStorage/dataset0.json --model 
 # Testing the Prediction Script
 
 - A sample dataset is included in data/sample_rna_data.json for testing the prediction script.
-- A pre-trained model is also included in model.joblib.
+- A pre-trained model is also included in model/model.joblib.
 
 To run prediction on the sample json file:
 ```bash
 # On Local Machine
-python model/predict.py --data data/sample_rna_data.json --model model.joblib --output_path outputs/model_predictions/sample_predictions.csv
+python model/predict.py --data data/sample_rna_data.json --model model/model.joblib --output_path outputs/model_predictions/sample_predictions.csv
 
 # On Ubuntu
-python3 model/predict.py --data data/sample_rna_data.json --model model.joblib --output_path outputs/model_predictions/sample_predictions.csv
+python3 model/predict.py --data data/sample_rna_data.json --model model/model.joblib --output_path outputs/model_predictions/sample_predictions.csv
 ```
 
-# Visualising results 
+# Visualising Results 
 
-Streamlit visualisation can be done after converting the outputted csv to parquet files and putting them into the folder: `data/parquet_files`.
+Streamlit visualisation can be done after converting the output prediction csv files to parquet files and putting them into the folder: `data/parquet_files/`.
 
-- conversion can be done through convert_to_parquet.ipynb
+- Conversion can be done through notebooks/convert_to_parquet.ipynb
 
 Install packages:
 ``` Bash
@@ -149,6 +150,6 @@ pip install -r page_renders/requirements.txt
 ```
 
 To run the streamlit interface:
-```Bash
+```bash
 streamlit run app.py
 ```

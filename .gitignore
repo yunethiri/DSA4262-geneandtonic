@@ -15,3 +15,5 @@ sample_predictions.csv
 
 data/parquet_files/*
 !data/parquet_files/.gitkeep
+
+.DS_Store
