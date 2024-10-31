@@ -92,7 +92,7 @@ python model/train.py --data path/to/rna_data.json --labels path/to/labels_data.
 python3 model/train.py --data path/to/rna_data.json --labels path/to/labels_data.info --output_path path/to/save_model.joblib
 
 # Default Project Storage routes
-python3 model/train.py --data ../studies/ProjectStorage/rna_data.json --labels ../studies/ProjectStorage/labels_data.info.txt --output_path model.joblib
+python3 model/train.py --data ../studies/ProjectStorage/rna_data.json --labels ../studies/ProjectStorage/labels_data.info.txt --output_path path/to/save_model.joblib
 ```
 **Arguments:**
 * ``--data``: Path to RNA-seq data, processed by m6Anet, in JSON format.
@@ -106,13 +106,13 @@ The trained model will be saved to the specified path in .joblib format for late
 To run prediction on new data using the trained model:
 ```bash
 # On Local Machine
-python model/predict.py --data path/to/new_rna_data.json --model model.joblib --output_path path/to/predictions.csv
+python model/predict.py --data path/to/new_rna_data.json --model model/model.joblib --output_path path/to/predictions.csv
 
 # On Ubuntu
-python3 model/predict.py --data path/to/new_rna_data.json --model model.joblib --output_path path/to/predictions.csv
+python3 model/predict.py --data path/to/new_rna_data.json --model model/model.joblib --output_path path/to/predictions.csv
 
 # Default Project Storage routes
-python3 model/predict.py --data ../studies/ProjectStorage/dataset0.json --model model.joblib --output_path path/to/predictions.csv
+python3 model/predict.py --data ../studies/ProjectStorage/dataset0.json --model model/model.joblib --output_path path/to/predictions.csv
 ```
 **Arguments:**
 * ``--data``: Path to RNA-seq data, processed by m6Anet, in JSON format.
@@ -127,9 +127,9 @@ python3 model/predict.py --data ../studies/ProjectStorage/dataset0.json --model 
 To run prediction on the sample json file:
 ```bash
 # On Local Machine
-python model/predict.py --data data/sample_rna_data.json --model model.joblib --output_path outputs/model_predictions/sample_predictions.csv
+python model/predict.py --data data/sample_rna_data.json --model model/model.joblib --output_path outputs/model_predictions/sample_predictions.csv
 
 # On Ubuntu
-python3 model/predict.py --data data/sample_rna_data.json --model model.joblib --output_path outputs/model_predictions/sample_predictions.csv
+python3 model/predict.py --data data/sample_rna_data.json --model model/model.joblib --output_path outputs/model_predictions/sample_predictions.csv
 ```
 
