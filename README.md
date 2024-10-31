@@ -6,22 +6,23 @@ The project structure is as follows.
 
 ```bash
 main/
-├── clustering/                    # Pickle files for clustering           
+├── clustering/                    # Pickle files for clustering
+├── data/
+│   ├── parquet_files/            
+│   ├── aws_cmd.txt                
+│   ├── sample_rna_data.json       # Sample data for testing the prediction script           
 ├── model/
+│   ├── model.joblib                   # Joblib file for pretrained model
 │   ├── predict.py                     # Script for making predictions
 │   ├── train.py                       # Script for training the model
 │   ├── utils.py                       # Script containing functions used for training and prediction
-├── notebooks/                     # Notebooks for testing
-├── data/
-│   ├── sample_rna_data.json       # Sample data for testing the prediction script
-│   ├── parquet_files/   
+├── notebooks/                     # Notebooks for testing 
 ├── outputs/
 │   ├── model_predictions/         # Csv files containing model prediction outputs
 ├── page_renders/                  # Page renderer scripts for streamlit      
-├── .gitignore
-├── app.py                         # Streamlit interface for visualisation of predictions   
+├── .gitignore 
 ├── README.md                      # Project documentation
-├── model.joblib                   # Joblib file for pretrained model
+├── app.py                         # Streamlit interface for visualisation of predictions  
 └── requirements.txt               # Project dependencies
 ```
 
