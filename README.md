@@ -126,7 +126,7 @@ python3 model/predict.py --data ../studies/ProjectStorage/dataset0.json --model 
 # Testing the Prediction Script
 
 - A sample dataset is included in data/sample_rna_data.json for testing the prediction script.
-- A pre-trained model is also included in model.joblib.
+- A pre-trained model is also included in model/model.joblib.
 
 To run prediction on the sample json file:
 ```bash
@@ -139,12 +139,11 @@ python3 model/predict.py --data data/sample_rna_data.json --model model/model.jo
 
 # Visualising results 
 
-Streamlit visualisation can be done after converting the outputted csv to parquet files and putting them into the folder: `data/parquet_files`.
+Streamlit visualisation can be done after converting the output prediction csv files to parquet files and putting them into the folder: `data/parquet_files/`.
 
-- conversion can be done through convert_to_parquet.ipynb
-
+- Conversion can be done through notebooks/convert_to_parquet.ipynb
 
 To run the streamlit interface:
-```Bash
+```bash
 streamlit run app.py
 ```
