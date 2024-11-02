@@ -23,8 +23,6 @@ def analyze_numerical_mutations(df):
 
     # Filter by which cell lines/ runs to include
     unique_runs = df.select("combined_run").unique().to_series().to_list() if group_by_column == "combined_run" else df.select("cell_line").unique().to_series().to_list()
-    selected_runs = st.multiselect("Select Runs or Cell Lines to Include", unique_runs, default=unique_runs)
-    df = df.filter(pl.col(group_by_column).is_in(selected_runs))
     
     # Purely for handling latency on graph generation, no binning displays counts for all value-types
     # Check the number of unique values in x-axis column
