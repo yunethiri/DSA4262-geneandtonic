@@ -66,7 +66,7 @@ python3 -V # Check if Python3 version is installed successfully
 
 ## If Running on Ubuntu:
 
-Use at least `m5a.2xlarge` instance, for faster feature engineering speeds, use `m6a.4xlarge` or `m6i.4xlarge` for the 16vCPUs 
+Use at least `m5a.2xlarge` instance. For faster feature engineering speeds and larger datasets, use `m6a.4xlarge` or `m6i.4xlarge` for the 16vCPUs.
 
 1. **Clone the Repository:**
    ```bash
