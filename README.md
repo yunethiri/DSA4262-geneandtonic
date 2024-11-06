@@ -30,6 +30,8 @@ main/
 
 # Table of Contents
 - **[Installation](#installation)**<br>
+  - **[Running on Local Machine](#running-on-local-machine)**<br>
+  - **[Running on Ubuntu](#running-on-ubuntu)**<br>
 - **[Running the Model](#running-the-model)**<br>
   - **[Model Training](#model-training)**<br>
   - **[Model Prediction](#model-prediction)**<br>
@@ -45,7 +47,7 @@ sudo apt install python3 -y # Install the default Python3 version
 python3 -V # Check if Python3 version is installed successfully
 ```
 
-## If Running on Local Machine:
+## Running on Local Machine
 
 1. **Clone the Repository:**
    ```bash
@@ -64,7 +66,7 @@ python3 -V # Check if Python3 version is installed successfully
    pip install -r requirements.txt
    ```
 
-## If Running on Ubuntu:
+## Running on Ubuntu
 
 Use at least `m5a.2xlarge` instance. For faster feature engineering speeds and larger datasets, use `m6a.4xlarge` or `m6i.4xlarge` for the 16vCPUs.
 
@@ -124,30 +126,34 @@ python3 model/predict.py --data ../studies/ProjectStorage/dataset0.json --model 
 * ``--model``: Path to the trained model file.
 * ``--output_path``: Path to save the prediction results to csv.
 
-Easter Egg: To include additional information and features in the output prediction csv, include ```--save_info True``` in the command.
+Note: To include additional information and features in the output prediction csv, include ```--save_info True``` in the command. To turn it off, exclude ``--save_info True`` in the command. 
 
 # Testing the Prediction Script
 
-- A sample dataset is included in data/sample_rna_data.json for testing the prediction script.
-- A pre-trained model is also included in model/model.joblib.
+- A sample dataset is included in `data/sample_rna_data.json` for testing the prediction script.
+- A pre-trained model is also included in `model/model.joblib`.
 
 To run prediction on the sample json file:
+#### On Local Machine
 ```bash
-# On Local Machine
 python model/predict.py --data data/sample_rna_data.json --model model/model.joblib --output_path outputs/model_predictions/sample_predictions.csv
-
-# On Ubuntu
+```
+#### On Ubuntu
+```bash
 python3 model/predict.py --data data/sample_rna_data.json --model model/model.joblib --output_path outputs/model_predictions/sample_predictions.csv
 ```
 
-# Visualising Results 
+# Visualising Results (SGNEx Data)
 
 Streamlit visualisation can be done after converting the output prediction csv files to parquet files and putting them into the folder: `data/parquet_files/`.
 
-- Conversion can be done through notebooks/convert_to_parquet.ipynb
+- Conversion can be done through `notebooks/convert_to_parquet.ipynb`
+- Enable ```--save_info True``` when running model predictions.
+
+## Run on Local Machine:
 
 Install packages:
-``` Bash
+``` bash
 pip install -r page_renders/requirements.txt
 ```
 
@@ -155,3 +161,5 @@ To run the streamlit interface:
 ```bash
 streamlit run app.py
 ```
+
+- Note: Currently, visualisation will only work on SGNEx datasets.
