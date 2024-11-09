@@ -142,6 +142,14 @@ python model/predict.py --data data/sample_rna_data.json --model model/model.job
 ```bash
 python3 model/predict.py --data data/sample_rna_data.json --model model/model.joblib --output_path outputs/model_predictions/sample_predictions.csv
 ```
+To view sample_predictions.csv:
+```bash
+# View first 100 rows
+head -n 100 outputs/model_predictions/sample_predictions.csv
+
+# View entire file
+cat outputs/model_predictions/sample_predictions.csv
+```
 
 # Visualising Results (SGNEx Data)
 
